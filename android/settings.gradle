@@ -1,3 +1,3 @@
-rootProject.name = 'ReactNativeFirebaseTodoList'
+rootProject.name = 'Author'
 
 include ':app'

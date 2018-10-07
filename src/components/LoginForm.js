@@ -15,7 +15,6 @@ class LoginForm extends Component {
 
   onButtonPress() {
     const { email, password } = this.props;
-
     this.props.loginUser({ email, password });
   }
 
@@ -82,3 +81,4 @@ const mapStateToProps = ({ auth }) => {
 export default connect(mapStateToProps, {
   emailChanged, passwordChanged, loginUser
 })(LoginForm);
+  
