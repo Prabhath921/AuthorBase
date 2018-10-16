@@ -1,9 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
+import { StatusBar } from 'react-native';
 
 const Card = (props) => {
   return (
     <View style={styles.containerStyle}>
+     <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.20)" animated style="{styles.statusBasStyles}"/>
       {props.children}
     </View>
   );
@@ -22,7 +24,11 @@ const styles = {
     elevation: 1,
     marginLeft: 5,
     marginRight: 5,
-    marginTop: 10
+    marginTop: 20,
+  },
+
+  statusBasStyles:{
+    height:25,
   }
 };
 

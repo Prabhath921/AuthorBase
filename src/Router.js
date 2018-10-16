@@ -6,6 +6,7 @@ import TodoCreate from './components/TodoCreate';
 import TodoEdit from './components/TodoEdit';
 
 const RouterComponent = () => {
+  
   return (
     <Router sceneStyle={{ paddingTop: 65 }}>
       <Scene key="auth">
