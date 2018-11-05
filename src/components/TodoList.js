@@ -1,21 +1,18 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { ListView } from 'react-native';
-import { todoFetch } from '../actions';
-import ListItem from './ListItem';
+import _ from "lodash";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { ListView ,View,Text} from "react-native";
+import { todoFetch } from "../actions";
+import ListItem from "./ListItem";
 
 class TodoList extends Component {
   componentWillMount() {
-    this.props.todoFetch();
-
-    this.createDataSource(this.props);
+    //this.props.todoFetch();
+    // this.createDataSource(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-
-    this.createDataSource(nextProps);
-
+    //this.createDataSource(nextProps);
   }
 
   createDataSource({ todos }) {
@@ -32,11 +29,14 @@ class TodoList extends Component {
 
   render() {
     return (
-      <ListView
-        enableEmptySections
-        dataSource={this.dataSource}
-        renderRow={this.renderRow}
-      />
+      <View>
+        <Text >hi there</Text>
+      </View>
+      //<ListView
+      //enableEmptySections
+      // dataSource={this.dataSource}
+      // renderRow={this.renderRow}
+      ///>
     );
   }
 }
@@ -49,4 +49,7 @@ const mapStateToProps = state => {
   return { todos };
 };
 
-export default connect(mapStateToProps, { todoFetch })(TodoList);
+export default connect(
+  mapStateToProps,
+  { todoFetch }
+)(TodoList);

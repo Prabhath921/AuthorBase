@@ -8,8 +8,8 @@ import TodoEdit from './components/TodoEdit';
 const RouterComponent = () => {
   
   return (
-    <Router sceneStyle={{ paddingTop: 65 }}>
-      <Scene key="auth">
+    <Router sceneStyle={{ paddingTop:25 }}>
+      <Scene key="auth" style={{paddingTop: 20}}>
         <Scene key="login" component={LoginForm} title="Please Login" />
       </Scene>
 
@@ -20,7 +20,7 @@ const RouterComponent = () => {
           key="todoList"
           component={TodoList}
           title="Todos"
-          initial
+          initial = "true"
         />
         <Scene key="todoCreate" component={TodoCreate} title="Create Todo" />
         <Scene key="todoEdit" component={TodoEdit} title="Edit Todo" />

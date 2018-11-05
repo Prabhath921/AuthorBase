@@ -5,7 +5,7 @@ import { StatusBar } from 'react-native';
 const Card = (props) => {
   return (
     <View style={styles.containerStyle}>
-     <StatusBar translucent backgroundColor="rgba(0, 0, 0, 0.20)" animated style="{styles.statusBasStyles}"/>
+   
       {props.children}
     </View>
   );

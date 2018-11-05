@@ -1,12 +1,26 @@
-import React, { Component } from 'react';
-import { Text } from 'react-native';
-import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
-import { Card, CardSection, Input, Button, Spinner } from './common';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { emailChanged, passwordChanged, loginUser } from "../actions";
+import {
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Text,
+  Form,
+  Button,
+  Input,
+  Spinner,
+  Item,
+  Label,
+  Body
+} from "native-base";
+import { bindActionCreators } from "redux";
 
 class LoginForm extends Component {
   onEmailChange(text) {
-       this.props.emailChanged(text);
+    this.props.emailChanged(text);
   }
 
   onPasswordChange(text) {
@@ -14,52 +28,61 @@ class LoginForm extends Component {
   }
 
   onButtonPress() {
+    //this.props.navigation.navigate("Main");
     const { email, password } = this.props;
     this.props.loginUser({ email, password });
   }
 
   renderButton() {
     if (this.props.loading) {
-      return <Spinner size="large" />;
+      return <Spinner color="green" />;
     }
-
     return (
-      <Button onPress={this.onButtonPress.bind(this)}>
-        Login
+      <Button
+        full
+        rounded
+        onPress={this.onButtonPress.bind(this)}
+        style={{ flex: 1 }}
+      >
+        <Text>Login</Text>
       </Button>
     );
   }
 
   render() {
     return (
-      <Card>
-        <CardSection>
-          <Input
-            label="Email"
-            placeholder="email@gmail.com"
-            onChangeText={this.onEmailChange.bind(this)}
-            value={this.props.email}
-          />
-        </CardSection>
+      <Container>
+        <Header />
 
-        <CardSection>
-          <Input
-            secureTextEntry
-            label="Password"
-            placeholder="password"
-            onChangeText={this.onPasswordChange.bind(this)}
-            value={this.props.password}
-          />
-        </CardSection>
-
-        <Text style={styles.errorTextStyle}>
-          {this.props.error}
-        </Text>
-
-        <CardSection>
-          {this.renderButton()}
-        </CardSection>
-      </Card>
+        <Body style={styles.loginCard}>
+          <Card style={{ backgroundColor: "transparent" }}>
+            <CardItem style={{ backgroundColor: "transparent" }}>
+              <Form style={{ width: "100%", backgroundColor: "transparent" }}>
+                <Item floatingLabel>
+                  <Label>Username</Label>
+                  <Input
+                    onChangeText={this.onEmailChange.bind(this)}
+                    value={this.props.email}
+                  />
+                </Item>
+                <Item floatingLabel>
+                  <Label>Password</Label>
+                  <Input
+                    secureTextEntry
+                    onChangeText={this.onPasswordChange.bind(this)}
+                    value={this.props.password}
+                  />
+                  <Input />
+                </Item>
+                <Item last style={{ padding: 15 }}>
+                  {this.renderButton()}
+                </Item>
+                <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+              </Form>
+            </CardItem>
+          </Card>
+        </Body>
+      </Container>
     );
   }
 }
@@ -67,18 +90,33 @@ class LoginForm extends Component {
 const styles = {
   errorTextStyle: {
     fontSize: 20,
-    alignSelf: 'center',
-    color: 'red'
+    alignSelf: "center",
+    flex: 1,
+    padding: 10
+  },
+
+  loginCard: {
+    flexGrow: 1,
+    alignContent: "center",
+    alignItem: "center",
+    justifyContent: "center"
   }
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { email, password, error, loading } = auth;
-
+const mapStateToProps = state => {
+  const { email, password, error, loading } = state.auth;
   return { email, password, error, loading };
 };
 
-export default connect(mapStateToProps, {
-  emailChanged, passwordChanged, loginUser
-})(LoginForm);
-  
+const mapDispatchToProps = dispatch => {
+  return {
+    emailChanged: bindActionCreators(emailChanged, dispatch),
+    passwordChanged: bindActionCreators(passwordChanged, dispatch),
+    loginUser: bindActionCreators(loginUser, dispatch)
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);

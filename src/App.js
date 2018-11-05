@@ -5,36 +5,29 @@ import firebase from "firebase";
 import ReduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import Router from "./Router";
+import StackNav from "./Navigator";
+import { config } from "./FirebaseConfig";
 
 import SplashScreen from "react-native-splash-screen";
 
 class App extends Component {
-  //change with your own firebase config
   componentWillMount() {
-    var config = {
-      apiKey: "xxx",
-      authDomain: "xxx",
-      databaseURL: "xxx",
-      projectId: "xxx",
-      storageBucket: "xxx",
-      messagingSenderId: "xxx"
-    };
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
+
+    // do stuff while splash screen is shown
+    // After having done stuff (such as async tasks) hide the splash screen
+    SplashScreen.hide();
   }
 
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
-        <Router />
+        <StackNav />
       </Provider>
     );
-  }
-
-  componentDidMount() {
-    // do stuff while splash screen is shown
-    // After having done stuff (such as async tasks) hide the splash screen
-    SplashScreen.hide();
   }
 }
 
