@@ -7,6 +7,7 @@ import reducers from "./reducers";
 import Router from "./Router";
 import StackNav from "./Navigator";
 import { config } from "./FirebaseConfig";
+import { Root } from "native-base";
 
 import SplashScreen from "react-native-splash-screen";
 
@@ -25,7 +26,9 @@ class App extends Component {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
-        <StackNav />
+        <Root>
+          <StackNav />
+        </Root>
       </Provider>
     );
   }

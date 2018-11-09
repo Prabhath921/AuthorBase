@@ -35,13 +35,16 @@ export const loginUser = ({ email, password }) => {
           .auth()
           .createUserWithEmailAndPassword(email, password)
           .then(user => loginUserSuccess(dispatch, user))
-          .catch(() => loginUserFail(dispatch));
+          .catch((ex) => {loginUserFail(dispatch,ex.toString())});
       });
   };
 };
 
-const loginUserFail = dispatch => {
-  dispatch({ type: LOGIN_USER_FAIL });
+const loginUserFail = (dispatch,ex) => {
+  dispatch({ 
+    type: LOGIN_USER_FAIL, 
+    payload: ex
+  });
 };
 
 const loginUserSuccess = (dispatch, user) => {
@@ -49,6 +52,6 @@ const loginUserSuccess = (dispatch, user) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-
-  Actions.main();
+  this.props.navigation.navigate("Main");
+  //Actions.main();
 };

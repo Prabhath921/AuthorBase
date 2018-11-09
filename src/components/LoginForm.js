@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { emailChanged, passwordChanged, loginUser } from "../actions";
+import { ImageBackground } from "react-native";
 import {
   Container,
   Header,
-  Content,
   Card,
   CardItem,
   Text,
@@ -14,11 +14,34 @@ import {
   Spinner,
   Item,
   Label,
-  Body
+  Body,
+  Thumbnail,
+  H3,
+  Toast
 } from "native-base";
 import { bindActionCreators } from "redux";
+import firebase from "firebase";
 
 class LoginForm extends Component {
+  componentWillMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+      }
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.error !== this.props.error) {
+      if (this.props.error != " ") {
+        Toast.show({
+          text: this.props.error,
+          type: "danger",
+          duration: 3000
+        });
+      }
+    }
+  }
+
   onEmailChange(text) {
     this.props.emailChanged(text);
   }
@@ -35,7 +58,12 @@ class LoginForm extends Component {
 
   renderButton() {
     if (this.props.loading) {
-      return <Spinner color="green" />;
+      return (
+        <Spinner
+          color="orange"
+          style={{ position: "relative", top: "-50%", left: "190%" }}
+        />
+      );
     }
     return (
       <Button
@@ -53,35 +81,44 @@ class LoginForm extends Component {
     return (
       <Container>
         <Header />
-
-        <Body style={styles.loginCard}>
-          <Card style={{ backgroundColor: "transparent" }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Form style={{ width: "100%", backgroundColor: "transparent" }}>
-                <Item floatingLabel>
-                  <Label>Username</Label>
-                  <Input
-                    onChangeText={this.onEmailChange.bind(this)}
-                    value={this.props.email}
-                  />
-                </Item>
-                <Item floatingLabel>
-                  <Label>Password</Label>
-                  <Input
-                    secureTextEntry
-                    onChangeText={this.onPasswordChange.bind(this)}
-                    value={this.props.password}
-                  />
-                  <Input />
-                </Item>
-                <Item last style={{ padding: 15 }}>
-                  {this.renderButton()}
-                </Item>
-                <Text style={styles.errorTextStyle}>{this.props.error}</Text>
-              </Form>
-            </CardItem>
-          </Card>
-        </Body>
+        <ImageBackground
+          source={require("../assets/images/imgLoginBackground.jpg")}
+          style={{ flex: 1, resizeMode: "cover" }}
+        >
+          <Body style={styles.loginCard}>
+            <Thumbnail
+              square
+              large
+              source={require("../assets/images/imgAppLogo.png")}
+              style={styles.appLogo}
+            />
+            <H3 style={styles.appLogoText}>Welcome To Author Writing portal</H3>
+            <Card style={{ backgroundColor: "transparent" }}>
+              <CardItem style={{ backgroundColor: "transparent" }}>
+                <Form style={{ width: "100%", backgroundColor: "transparent" }}>
+                  <Item floatingLabel>
+                    <Label>Username</Label>
+                    <Input
+                      onChangeText={this.onEmailChange.bind(this)}
+                      value={this.props.email}
+                    />
+                  </Item>
+                  <Item floatingLabel>
+                    <Label>Password</Label>
+                    <Input
+                      secureTextEntry
+                      onChangeText={this.onPasswordChange.bind(this)}
+                      value={this.props.password}
+                    />
+                  </Item>
+                  <Item last style={{ padding: 15 }}>
+                    {this.renderButton()}
+                  </Item>
+                </Form>
+              </CardItem>
+            </Card>
+          </Body>
+        </ImageBackground>
       </Container>
     );
   }
@@ -91,8 +128,7 @@ const styles = {
   errorTextStyle: {
     fontSize: 20,
     alignSelf: "center",
-    flex: 1,
-    padding: 10
+    color: "red"
   },
 
   loginCard: {
@@ -100,6 +136,18 @@ const styles = {
     alignContent: "center",
     alignItem: "center",
     justifyContent: "center"
+  },
+
+  appLogo: {
+    width: 85,
+    height: 95,
+    alignSelf: "center",
+    marginBottom: 25
+  },
+
+  appLogoText: {
+    color: "orange",
+    marginBottom: 20
   }
 };
 

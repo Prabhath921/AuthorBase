@@ -25,7 +25,7 @@ import {
       case LOGIN_USER_SUCCESS:
         return { ...state, ...INITIAL_STATE, user: action.payload };
       case LOGIN_USER_FAIL:
-        return { ...state, error: 'Auth Failed.', password: '', loading: false };
+        return { ...state, error: action.payload, password: '', loading: false };
       default:
         return state;
     }
