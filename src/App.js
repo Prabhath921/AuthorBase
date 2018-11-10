@@ -16,7 +16,9 @@ class App extends Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(config);
     }
+ }
 
+  componentDidMount() {
     // do stuff while splash screen is shown
     // After having done stuff (such as async tasks) hide the splash screen
     SplashScreen.hide();
@@ -25,11 +27,11 @@ class App extends Component {
   render() {
     const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
-      <Provider store={store}>
-        <Root>
+      <Root>
+        <Provider store={store}>
           <StackNav />
-        </Root>
-      </Provider>
+        </Provider>
+      </Root>
     );
   }
 }

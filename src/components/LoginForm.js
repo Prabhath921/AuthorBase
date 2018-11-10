@@ -17,7 +17,8 @@ import {
   Body,
   Thumbnail,
   H3,
-  Toast
+  Toast,
+  View
 } from "native-base";
 import { bindActionCreators } from "redux";
 import firebase from "firebase";
@@ -51,18 +52,24 @@ class LoginForm extends Component {
   }
 
   onButtonPress() {
-    //this.props.navigation.navigate("Main");
+    //this.props.navigation.navigate("Register");
     const { email, password } = this.props;
     this.props.loginUser({ email, password });
+  }
+
+  onRegisterPress() {
+    this.props.navigation.navigate("Register");
   }
 
   renderButton() {
     if (this.props.loading) {
       return (
-        <Spinner
-          color="orange"
-          style={{ position: "relative", top: "-50%", left: "190%" }}
-        />
+        <View style={{width:"100%",bottom:"0%"}}>
+          <Spinner
+            color="orange"
+            style={{width:50,alignSelf:"center"}}
+          />
+        </View>
       );
     }
     return (
@@ -80,7 +87,6 @@ class LoginForm extends Component {
   render() {
     return (
       <Container>
-        <Header />
         <ImageBackground
           source={require("../assets/images/imgLoginBackground.jpg")}
           style={{ flex: 1, resizeMode: "cover" }}
@@ -111,9 +117,31 @@ class LoginForm extends Component {
                       value={this.props.password}
                     />
                   </Item>
-                  <Item last style={{ padding: 15 }}>
-                    {this.renderButton()}
-                  </Item>
+                  <Label
+                    style={{
+                      alignSelf: "flex-end",
+                      color: "gray",
+                      fontSize: 12
+                    }}
+                  >
+                    forget password?
+                  </Label>
+                  <Item style={{ padding: 15 }}>{this.renderButton()}</Item>
+                  <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={styles.LeftLine} />
+                    <Label style={styles.Text}>or login with</Label>
+                    <View style={styles.RightLine} />
+                  </View>
+                  <Label style={{ alignSelf: "center" }}>
+                    Don't you have an account?{" "}
+                    <Label
+                      onPress={this.onRegisterPress.bind(this)}
+                      style={{ color: "#3F51B5" }}
+                    >
+                      Register{" "}
+                    </Label>
+                    Here
+                  </Label>
                 </Form>
               </CardItem>
             </Card>
@@ -142,12 +170,38 @@ const styles = {
     width: 85,
     height: 95,
     alignSelf: "center",
-    marginBottom: 25
+    marginBottom: 15
   },
 
   appLogoText: {
     color: "orange",
     marginBottom: 20
+  },
+
+  LeftLine: {
+    alignSelf: "flex-start",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    zIndex: 1,
+    width: "33.5%",
+    marginRight: 5
+  },
+
+  Text: {
+    alignSelf: "center",
+    width: 96,
+    paddingBottom: 5,
+    position: "relative",
+    zIndex: 5
+  },
+
+  RightLine: {
+    alignSelf: "flex-end",
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    zIndex: 1,
+    width: "33.5%",
+    marginLeft: 5
   }
 };
 

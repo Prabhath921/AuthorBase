@@ -1,14 +1,15 @@
 import { StackNavigator, SwitchNavigator } from 'react-navigation';
 import LoginForm from './components/LoginForm';
 import TestPage from './components/TestPage';
+import SignUpForm from './components/SignUpForm'
 
-const Stack = SwitchNavigator({
+const Stack = StackNavigator({
     Login: {
      screen: LoginForm
     },
-    Main: {
-      screen: TestPage
+    Register: {
+      screen: SignUpForm
     }
   });
 
-  export default Stack;
+export default Stack;
