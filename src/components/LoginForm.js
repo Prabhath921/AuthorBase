@@ -22,13 +22,11 @@ import {
 } from "native-base";
 import { bindActionCreators } from "redux";
 import firebase from "firebase";
+import NavigationService from '../NavigationService';
+
 
 class LoginForm extends Component {
   componentWillMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-      }
-    });
   }
 
   componentDidUpdate(prevProps) {
@@ -64,11 +62,8 @@ class LoginForm extends Component {
   renderButton() {
     if (this.props.loading) {
       return (
-        <View style={{width:"100%",bottom:"0%"}}>
-          <Spinner
-            color="orange"
-            style={{width:50,alignSelf:"center"}}
-          />
+        <View style={{ width: "100%", bottom: "0%" }}>
+          <Spinner color="orange" style={{ width: 50, alignSelf: "center" }} />
         </View>
       );
     }
@@ -87,6 +82,7 @@ class LoginForm extends Component {
   render() {
     return (
       <Container>
+        <Header />
         <ImageBackground
           source={require("../assets/images/imgLoginBackground.jpg")}
           style={{ flex: 1, resizeMode: "cover" }}
