@@ -26,8 +26,9 @@ class App extends Component {
       if (user) {
         NavigationService.navigate("Register");
         SplashScreen.hide();
+        //firebase.auth.signOut();
+        alert(user.displayName);
       } else {
-        firebase.auth.signOut();
         SplashScreen.hide();
       }
     });
