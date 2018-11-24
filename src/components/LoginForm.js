@@ -21,13 +21,10 @@ import {
   View
 } from "native-base";
 import { bindActionCreators } from "redux";
-import firebase from "firebase";
-import NavigationService from '../NavigationService';
 
 
 class LoginForm extends Component {
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   componentDidUpdate(prevProps) {
     if (prevProps.error !== this.props.error) {
@@ -52,18 +49,15 @@ class LoginForm extends Component {
   onButtonPress() {
     //this.props.navigation.navigate("Register");
     const { email, password } = this.props;
-    if(password){
+    if (password) {
       this.props.loginUser({ email, password });
-    }
-    else
-    {
+    } else {
       Toast.show({
         text: "Please enter password",
         type: "danger",
         duration: 3000
       });
     }
-    
   }
 
   onRegisterPress() {
@@ -133,12 +127,23 @@ class LoginForm extends Component {
                   >
                     forget password?
                   </Label>
-                  <Item last style={{ padding: 15 }}>{this.renderButton()}</Item>
+                  <Item style={{ padding: 15 }}>{this.renderButton()}</Item>
                   <View style={{ flex: 1, flexDirection: "row" }}>
                     <View style={styles.LeftLine} />
                     <Label style={styles.Text}>or login with</Label>
                     <View style={styles.RightLine} />
                   </View>
+                  <Item>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        alignContent: "center"
+                      }}
+                    >
+                    
+                    </View>
+                  </Item>
                   <Label style={{ alignSelf: "center" }}>
                     Don't you have an account?{" "}
                     <Label
