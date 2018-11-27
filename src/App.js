@@ -4,11 +4,10 @@ import { createStore, applyMiddleware } from "redux";
 import firebase from "firebase";
 import ReduxThunk from "redux-thunk";
 import reducers from "./reducers";
-import Router from "./Router";
-import Stack from "./Navigator";
+import AppNavigator from "./navigators/appNavigator";
 import { config } from "./FirebaseConfig";
 import { Root } from "native-base";
-import NavigationService from "./NavigationService";
+import NavigationService from "./navigators/NavigationService";
 
 import SplashScreen from "react-native-splash-screen";
 
@@ -24,10 +23,9 @@ class App extends Component {
     // After having done stuff (such as async tasks) hide the splash screen
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        NavigationService.navigate("Register");
+        NavigationService.navigate("Dashboard");
         SplashScreen.hide();
         //firebase.auth.signOut();
-        alert(user.displayName);
       } else {
         SplashScreen.hide();
       }
@@ -39,7 +37,7 @@ class App extends Component {
     return (
       <Root>
         <Provider store={store}>
-          <Stack
+          <AppNavigator
             ref={navigatorRef => {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}

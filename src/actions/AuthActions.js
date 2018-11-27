@@ -7,7 +7,7 @@ import {
   LOGIN_USER_FAIL,
   LOGIN_USER
 } from "./types";
-import NavigationService from '../NavigationService';
+import NavigationService from '../navigators/NavigationService';
 
 export const emailChanged = text => {
   return {
@@ -33,14 +33,15 @@ export const loginUser = ({ email, password }) => {
       .then(user => loginUserSuccess(dispatch, user))
       .catch(error => {
         if(error.code == 'auth/wrong-password'){
-          loginUserFail(dispatch,ex.message)
+          loginUserFail(dispatch,error.message)
         }
         else{
-          firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(user => loginUserSuccess(dispatch, user))
-          .catch((ex) => {loginUserFail(dispatch,ex.message)});
+          loginUserFail(dispatch,"Couldn't find your account")
+          //firebase
+          //.auth()
+          //.createUserWithEmailAndPassword(email, password)
+          //.then(user => loginUserSuccess(dispatch, user))
+          //.catch((ex) => {loginUserFail(dispatch,ex.message)});
         }
       });
   };
@@ -58,7 +59,7 @@ const loginUserSuccess = (dispatch, user) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-  NavigationService.navigate("Register");
+  //NavigationService.navigate("Register");
   //this.props.navigation.navigate("Main");
   //Actions.main();
 };
