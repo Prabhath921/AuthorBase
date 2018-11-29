@@ -21,10 +21,13 @@ import {
   View,
   Grid,
   Col,
-  Row
+  Row,
+  StyleProvider
 } from "native-base";
 import { bindActionCreators } from "redux";
 import Toast from "react-native-toast-native";
+import getTheme from "../../theme/components";
+import BaseTheme from "../../theme/variables/orangeTheme";
 
 class LoginForm extends Component {
   componentWillMount() {}
@@ -62,184 +65,214 @@ class LoginForm extends Component {
   renderButton() {
     if (this.props.loading) {
       return (
-        <View style={{ width: "100%", bottom: "0%" }}>
-          <Spinner color="orange" style={{ width: 50, alignSelf: "center" }} />
-        </View>
+        <StyleProvider style={getTheme(BaseTheme)}>
+          <View style={{ width: "100%", bottom: "0%" }}>
+            <Spinner
+              color="#FF5A12"
+              style={{ width: 50, alignSelf: "center" }}
+            />
+          </View>
+        </StyleProvider>
       );
     }
     return (
-      <Button
-        full
-        rounded
-        onPress={this.onButtonPress.bind(this)}
-        style={{ flex: 1 }}
-      >
-        <Text>Login</Text>
-      </Button>
+      <StyleProvider style={getTheme(BaseTheme)}>
+        <Button
+          full
+          rounded
+          onPress={this.onButtonPress.bind(this)}
+          style={{ flex: 1 }}
+        >
+          <Text>Login</Text>
+        </Button>
+      </StyleProvider>
     );
   }
 
   render() {
     return (
-      <Container>
-        <Header />
-        <ImageBackground
-          source={require("../../assets/images/imgLoginBackground.jpg")}
-          style={{ flex: 1, resizeMode: "cover" }}
-        >
-          <Content>
-            <Body style={styles.loginCard}>
-              <Thumbnail
-                square
-                large
-                source={require("../../assets/images/imgAppLogo.png")}
-                style={styles.appLogo}
-              />
-              <H3 style={styles.appLogoText}>
-                Welcome To Author Writing portal
-              </H3>
-              <Card style={{ backgroundColor: "transparent" }}>
-                <CardItem style={{ backgroundColor: "transparent" }}>
-                  <Form
-                    style={{ width: "100%", backgroundColor: "transparent" }}
-                  >
-                    <Item floatingLabel>
-                      <Label>Email</Label>
-                      <Input
-                        onChangeText={this.onEmailChange.bind(this)}
-                        value={this.props.email}
-                      />
-                    </Item>
-                    <Item floatingLabel>
-                      <Label>Password</Label>
-                      <Input
-                        secureTextEntry
-                        onChangeText={this.onPasswordChange.bind(this)}
-                        value={this.props.password}
-                      />
-                    </Item>
-                    <Label
+      <StyleProvider style={getTheme(BaseTheme)}>
+        <Container>
+          <Header>
+            <Text style={{ color: "white" }}>Login</Text>
+          </Header>
+          <ImageBackground
+            source={require("../../assets/images/imgLoginBackground.jpg")}
+            style={{ flex: 1, resizeMode: "cover" }}
+          >
+            <Content>
+              <Body style={styles.loginCard}>
+                <Thumbnail
+                  square
+                  large
+                  source={require("../../assets/images/imgAppLogo.png")}
+                  style={styles.appLogo}
+                />
+                <H3 style={styles.appLogoText}>
+                  Welcome To Author Writing portal
+                </H3>
+                <Card style={{ backgroundColor: "transparent" }}>
+                  <CardItem style={{ backgroundColor: "transparent" }}>
+                    <Form
                       style={{
-                        alignSelf: "flex-end",
-                        fontSize: 12
+                        width: "100%",
+                        backgroundColor: "transparent",
                       }}
                     >
-                      forget password?
-                    </Label>
-                    <Item style={{ padding: 15 }}>{this.renderButton()}</Item>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        marginBottom: 1
-                      }}
-                    >
-                      <Grid
+                      <View style={{  padding:25}}>
+                        <Item floatingLabel style={{marginBottom:15}}>
+                          <Label>Email</Label>
+                          <Input
+                            onChangeText={this.onEmailChange.bind(this)}
+                            value={this.props.email}
+                          />
+                        </Item>
+                        <Item floatingLabel style={{Height:70}}>
+                          <Label>Password</Label>
+                          <Input
+                            secureTextEntry
+                            onChangeText={this.onPasswordChange.bind(this)}
+                            value={this.props.password}
+                          />
+                        </Item>
+                        <Label
+                          style={{
+                            alignSelf: "flex-end",
+                            fontSize: 12
+                          }}
+                        >
+                          forget password?
+                        </Label>
+                        <Item style={{ padding: 15 }}>
+                          {this.renderButton()}
+                        </Item>
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: "row",
+                            marginBottom: 1
+                          }}
+                        />
+
+                        <Grid
+                          style={{
+                            width: "100%",
+                            height: 40,
+                            display: "flex",
+                            paddingTop: 20,
+                            position: "relative"
+                          }}
+                        >
+                          <Row>
+                            <Col
+                              style={{
+                                backgroundColor: "#635DB7",
+                                height: 2,
+                                width: "33.33%"
+                              }}
+                            />
+
+                            <Col
+                              style={{
+                                height: 2,
+                                width: "33.33%"
+                              }}
+                            >
+                              <Label style={styles.Text}>or login with</Label>
+                            </Col>
+                            <Col
+                              style={{
+                                backgroundColor: "#635DB7",
+                                height: 2,
+                                width: "33.33%"
+                              }}
+                            />
+                          </Row>
+                        </Grid>
+                      </View>
+                      <View
                         style={{
-                          width: "100%",
-                          height: 40,
-                          display: "flex",
-                          paddingTop: 20,
-                          position: "relative"
+                          alignContent: "center",
+                          alignSelf: "center",
+                          justifyContent: "center",
+                          flex:1,
+                          flexDirection: "row",
+                          margin: 0,
+                          padding:0,
                         }}
                       >
-                        <Row>
-                          <Col
+                        <TouchableOpacity
+                          onPress={this.onRegisterPress.bind(this)}
+                        >
+                          <Thumbnail
                             style={{
-                              backgroundColor: "#635DB7",
-                              height: 2,
-                              width: "33.33%"
+                              alignSelf: "center",
+                              width: 45,
+                              height: 45
                             }}
+                            small
+                            source={require("../../assets/images/FbIcon.png")}
                           />
-
-                          <Col
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={this.onRegisterPress.bind(this)}
+                        >
+                          <Thumbnail
                             style={{
-                              height: 2,
-                              width: "33.33%"
+                              alignSelf: "center",
+                              width: 35,
+                              height: 35,
+                              marginRight: 8
                             }}
-                          >
-                            <Label style={styles.Text}>or login with</Label>
-                          </Col>
-                          <Col
-                            style={{
-                              backgroundColor: "#635DB7",
-                              height: 2,
-                              width: "33.33%"
-                            }}
+                            small
+                            source={require("../../assets/images/GoogleIcon.png")}
                           />
-                        </Row>
-                      </Grid>
-                    </View>
-                    <View
-                      style={{
-                        alignContent: "center",
-                        alignSelf: "center",
-                        justifyContent: "center",
-                        width: "100%",
-                        flexDirection: "row",
-                        margin: 0
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={this.onRegisterPress.bind(this)}
-                      >
-                        <Thumbnail
-                          style={{ alignSelf: "center", width: 45, height: 45 }}
-                          small
-                          source={require("../../assets/images/FbIcon.png")}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={this.onRegisterPress.bind(this)}
-                      >
-                        <Thumbnail
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={this.onRegisterPress.bind(this)}
+                        >
+                          <Thumbnail
+                            style={{
+                              alignSelf: "center",
+                              width: 35,
+                              height: 35
+                            }}
+                            small
+                            source={require("../../assets/images/TwitterIcon.png")}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                      <View>
+                        <Label
                           style={{
                             alignSelf: "center",
-                            width: 35,
-                            height: 35,
-                            marginRight: 8
+                            position: "relative",
+                            zIndex: 500,
+                            height: 40,
+                            width: "95%",
+                            bottom: "15%",
+                            color: "#000000",
+                            textAlign: "center"
                           }}
-                          small
-                          source={require("../../assets/images/GoogleIcon.png")}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={this.onRegisterPress.bind(this)}
-                      >
-                        <Thumbnail
-                          style={{ alignSelf: "center", width: 35, height: 35 }}
-                          small
-                          source={require("../../assets/images/TwitterIcon.png")}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                    <Label
-                      style={{
-                        alignSelf: "center",
-                        bottom: -35,
-                        zIndex: 500,
-                        position: "relative",
-                        height: 40,
-                        width: "100%",
-                        marginBottom: 8
-                      }}
-                    >
-                      Don't you have an account?{" "}
-                      <Label
-                        onPress={this.onRegisterPress.bind(this)}
-                        style={{ color: "#3F51B5" }}
-                      >
-                        Register{" "}
-                      </Label>
-                      Here
-                    </Label>
-                  </Form>
-                </CardItem>
-              </Card>
-            </Body>
-          </Content>
-        </ImageBackground>
-      </Container>
+                        >
+                          Don't you have an account?{" "}
+                          <Label
+                            onPress={this.onRegisterPress.bind(this)}
+                            style={{ color: "#E2682B" }}
+                          >
+                            Register{" "}
+                          </Label>
+                          Here
+                        </Label>
+                      </View>
+                    </Form>
+                  </CardItem>
+                </Card>
+              </Body>
+            </Content>
+          </ImageBackground>
+        </Container>
+      </StyleProvider>
     );
   }
 }
@@ -267,7 +300,7 @@ const styles = {
   },
 
   appLogoText: {
-    color: "orange",
+    color: "#FF5A12",
     marginBottom: 20
   },
 
